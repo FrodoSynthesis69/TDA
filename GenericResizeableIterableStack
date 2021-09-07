@@ -1,0 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tda;
+
+import java.util.Iterator;
+import java.util.Stack;
+import tda.*;
+/**
+ *
+ * @author barsa
+ */
+public class GenericResizingIterableStack extends GenericResizingIterableArrayList<Object>{
+    
+    
+    public void StackTest(){
+        
+    Stack<String> pila = new Stack<String>(); // LIFO
+    pila.push("Prueba");
+    String next = pila.pop();
+    }
+    
+    
+    
+     @Override
+    public Iterator<Object> iterator() {
+        return new ArrayIterator();
+    }
+    
+    private class ArrayIterator implements Iterator<Object>{
+       private int i = 0;
+
+        @Override
+        public boolean hasNext() {
+            return i < contador;
+        }
+
+        @Override
+        public Object next() {
+            return a[i++];
+        }
+       
+    }
+}
