@@ -1,0 +1,211 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tda;
+
+/**
+ *
+ * @author JCNB
+ */
+public class FixedCapacityArrayList {
+
+    private String a[];         //arreglo de la lista
+    private int contador;       //número de elementos en la lista
+    // contador es el indice
+
+    /*
+     * constructor
+     */
+    public FixedCapacityArrayList() {
+        a = new String[10];
+        contador = 0;   
+     //Constructor sobrecargado
+    }
+    public FixedCapacityArrayList(int tamaño) {
+        a = new String[tamaño];
+        contador = 0;
+
+    }
+
+    /*
+     * adicionar Inserta un elemento al final de la lista    
+     */
+    public void adicionar(String nombre) {
+        /*a[contador++] = nombre;//variable contador y se incrementa
+        // ++contador, primero incremeto el valor de la variable contador y luego uso el subindice
+        //Uso el valor de la variable y lo incremento
+        */
+        if(contador<a.length)
+            a[contador++] = nombre;
+
+    }
+
+    /*
+     * adicionar Inserta un elemento en una posición específica de la lista
+     */
+    public void adicionar(String nombre, int indice) {
+        if (contador < a.length){
+            aLaDerecha(indice);//Me crea un espacio
+            a[indice] = nombre; //Poner nuevo nombre
+            contador++;
+        }
+
+    }
+
+    /*
+     * removerTodo Remueve todos los elementos de la lista
+     */
+    public void removerTodo() {
+       a = new String[a.length];
+       //Es un arreglo del mismo tamañano pero vacio
+       contador = 0;
+        
+
+    }
+
+    /*
+     * remover Remueve y retorna el elemento ubicado en una posición específica de la lista
+     */
+    public String remover(int indice) {
+        if(indice >= 0&& indice < contador){    
+            String removido = a[indice];//Variable temporal que guarda el dato
+            aLaIzquierda(indice);
+            a[-- contador] = null;
+            return removido;
+        }
+        else
+        return null;
+    }
+
+    /*
+     * remover Remueve la primer ocurrencia de un elemento específco de la lista,
+     * retorna verdadero si fue removido o falso en caso contrario
+     */
+    public boolean remover(String nombre) {
+        int indice = indiceDe(nombre);//Buscar el nombre si esta
+        if (indice != -1) {//Si lo encontro
+            aLaIzquierda(indice);
+            //Afecta cantidad de elemento
+            a[-- contador] = null;
+            //Dejo nulo en la posición y lo decremento
+            return true;
+        }
+        else return false;
+
+    }
+
+    /*
+     * contiene Retorna verdadero si un dato específico se encuentra en la lista o falso en caso contrario
+     */
+    public boolean contiene(String nombre) {
+        return indiceDe(nombre) != -1;
+        // Diferente de -1
+        //Indice de la posición donde lo encontro
+
+        /* if (!estaVacia())//Si no esta vacia
+        {
+            for (int i = 0; i < contador; i++) {
+                if (nombre.equalsIgnoreCase(a[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;*/
+    }
+
+    /*
+     * indiceDe Retorna el índice de la primera ocurrencia de un dato específico en la lista o -1 si no se encuentra
+     */
+    public int indiceDe(String nombre) {
+        //(Si no esta vacia)
+        if (!estaVacia()) {
+            for (int i = 0; i < contador; i++) {
+                //Equals. compare la cadena
+                if (nombre.equalsIgnoreCase(a[i])) {
+                    //Uno que sea igual
+                    //.equalIgnoreCase ignora mayusculas y minusculas
+                    return i;
+                }
+            }
+            return -1;
+        }
+        return -1;
+        
+    }
+
+    /*
+     * obtenerArreglo Retorna todos los elementos de la lista en un arreglo
+     */
+    public String[] obtenerArreglo() {
+        //Crear arreglo/ Arreglo tamaño contador
+        String arreglo[] = new String[contador];
+        for (int i = 0; i < contador; i++) {
+            arreglo[i] = a[i];        
+    
+        }
+        return arreglo;
+    }
+
+    /*
+     * obtener Retorna el elemento ubicado en una posición específica de la lista
+     */
+    public String obtener(int indice) {
+        if (indice >= 0 && indice < contador)//Si esto es falso retorna nulo
+            //Valor del indice es >= a 0 e indice es menor que el contador
+            //indice menor que el contador (pos 0)
+        {
+            return a[indice];
+        }
+        return null;
+
+    }
+
+    /*
+     * estaVacía Retorna verdadero si la lista está vacía o falso en caso contrario
+     */
+    public boolean estaVacia() {
+        return contador == 0;
+        //Retornar el resultado de una vez
+
+        /*if (contador == 0)
+        return true;
+        else
+        return false;
+         */
+    }
+
+    /*
+     * tamaño Retorna la cantidad de elementos guardados en la lista
+     */
+    public int tamano() {
+        return contador;
+  
+    }
+
+    /*
+     * aLaIzquierda Mueve a la izquierda todos los elementos a partir de la posición indicada
+     */
+    private void aLaIzquierda(int indice) {
+       for(int i = indice; i<contador; i++)
+           a[i] = a[i+1];
+    }
+
+    /*
+     * aLaDerecha Mueve a la derecha todos los elementos a partir de la posición indicada
+     */
+    private void aLaDerecha(int indice) {
+      for(int i = contador-1; i>indice; i--)
+          a[i] = a[i-1];
+    }
+
+//    public String[] getA() {
+//        return a;
+//    }
+//
+//    public int getContador() {
+//        return contador;
+//    }
+//    
+}
