@@ -1,0 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package interfaz;
+
+
+import java.util.Scanner;
+import tda.*;
+
+/**
+ *
+ * @author USUARIO
+ */
+public class InterfazApp {
+    
+    //private FixedCapacityArrayList al;
+    //private GenericFixedCapacityArrayList <String> al;
+    //private GenericResizingArrayList al;
+    private GenericResizingIterableArrayList <String> al;
+    
+   public InterfazApp(int tamano){
+        //al= new FixedCapacityArrayList(tamano);
+        //al= new GenericFixedCapacityArrayList <> (tamano);
+        //al= new GenericResizingArrayList(tamano);
+        al= new GenericResizingIterableArrayList<>(tamano);
+    }
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        
+        System.out.println("Ingrese el tamaño de la lista.");
+        int tamano=sc.nextInt();
+        
+        InterfazApp iApp= new InterfazApp(tamano);
+        iApp.al.adicionar("Juan");
+        iApp.al.adicionar("Felipe");
+        iApp.al.adicionar("Ana");
+        iApp.al.adicionar("Miguel");
+        iApp.al.adicionar("Camilo");
+        
+        
+        for(String nombre: iApp.al)
+            System.out.println(nombre);
+        
+        System.out.println("Ana se encuentra en el índice: "+ iApp.al.indiceDe("Ana"));
+        System.out.println("remover índice 2: "+ iApp.al.remover(2));
+        
+        for(String nombre: iApp.al)
+            System.out.println(nombre);
+        
+    }
+    
+}
+    
+       
