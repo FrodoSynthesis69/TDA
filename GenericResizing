@@ -1,0 +1,229 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tda;
+
+/**
+ *
+ * @author JCNB
+ */
+//Diamantes, parametros, Guardar cosas genericas de tipo Item
+//Identificar parametro de tipo
+public class GenericResizing <Item> {
+
+    private Item a[];         //arreglo de la lista
+    private int contador;       //número de elementos en la lista
+    // contador es el indice
+
+    /*
+     * constructor
+     */
+    public GenericResizing() {
+        //No es permitido un arreglo de tipo generico
+        // Todas las clases de manera implicita heredan de una super clase
+        //Tipo Object 
+        //Tipo casting a un arreglo de tipo item
+        a = (Item[]) new Object[10];
+        contador = 0;   
+     //Constructor sobrecargado
+    }
+    public GenericResizing(int tamaño) {
+        a = (Item[]) new Object[tamaño];
+        contador = 0;
+
+    }
+
+    /*
+     * adicionar Inserta un elemento al final de la lista    
+     */
+    public void adicionar(Item item) {
+        /*a[contador++] = nombre;//variable contador y se incrementa
+        // ++contador, primero incremeto el valor de la variable contador y luego uso el subindice
+        //Uso el valor de la variable y lo incremento
+        */
+        if(estaLlena())
+            resize(2*a.length);
+        a[contador++] = item;
+        
+
+    }
+
+    /*
+     * adicionar Inserta un elemento en una posición específica de la lista
+     */
+    public void adicionar(Item item, int indice) {
+        if (contador < a.length){
+            aLaDerecha(indice);//Me crea un espacio
+            a[indice] = item; //Poner nuevo nombre
+            contador++;
+        }
+
+    }
+
+    /*
+     * removerTodo Remueve todos los elementos de la lista
+     */
+    public void removerTodo() {
+       a = (Item[]) new Object[a.length];
+       //Es un arreglo del mismo tamañano pero vacio
+       contador = 0;
+        
+
+    }
+
+    /*
+     * remover Remueve y retorna el elemento ubicado en una posición específica de la lista
+     */
+    public Item remover(int indice) {
+        if(indice >= 0&& indice < contador){    
+            Item removido = a[indice];//Variable temporal que guarda el dato
+            aLaIzquierda(indice);
+            a[-- contador] = null;
+            if(contador > 0 && contador == a.length/4)
+                resize(a.length/2);
+            return removido;
+        }
+        else
+        return null;
+    }
+
+    /*
+     * remover Remueve la primer ocurrencia de un elemento específco de la lista,
+     * retorna verdadero si fue removido o falso en caso contrario
+     */
+    public boolean remover(Item item) {
+        int indice = indiceDe(item);//Buscar el nombre si esta
+        if (indice != -1) {//Si lo encontro
+            aLaIzquierda(indice);
+            //Afecta cantidad de elemento
+            a[-- contador] = null;
+            if(contador > 0 && contador == a.length/4)
+                resize(a.length/2);
+            //Dejo nulo en la posición y lo decremento
+            return true;
+        }
+        else return false;
+
+    }
+
+    /*
+     * contiene Retorna verdadero si un dato específico se encuentra en la lista o falso en caso contrario
+     */
+    public boolean contiene(Item item) {
+        return indiceDe(item) != -1;
+        // Diferente de -1
+        //Indice de la posición donde lo encontro
+
+        /* if (!estaVacia())//Si no esta vacia
+        {
+            for (int i = 0; i < contador; i++) {
+                if (nombre.equalsIgnoreCase(a[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;*/
+    }
+
+    /*
+     * indiceDe Retorna el índice de la primera ocurrencia de un dato específico en la lista o -1 si no se encuentra
+     */
+    public int indiceDe(Item item) {
+        //(Si no esta vacia)
+        if (!estaVacia()) {
+            for (int i = 0; i < contador; i++) {
+                //Equals. compare la cadena
+                if (item.equals(a[i])) {
+                    //Uno que sea igual
+                    //.equalIgnoreCase ignora mayusculas y minusculas
+                    return i;
+                }
+            }
+            return -1;
+        }
+        return -1;
+        
+    }
+
+    /*
+     * obtenerArreglo Retorna todos los elementos de la lista en un arreglo
+     */
+    public Item[] obtenerArreglo() {
+        //Crear arreglo/ Arreglo tamaño contador
+        Item arreglo[] = (Item[]) new Object[contador]; 
+        for (int i = 0; i < contador; i++) {
+            arreglo[i] = a[i];        
+    
+        }
+        return arreglo;
+    }
+
+    /*
+     * obtener Retorna el elemento ubicado en una posición específica de la lista
+     */
+    public Item obtener(int indice) {
+        if (indice >= 0 && indice < contador)//Si esto es falso retorna nulo
+            //Valor del indice es >= a 0 e indice es menor que el contador
+            //indice menor que el contador (pos 0)
+        {
+            return a[indice];
+        }
+        return null;
+
+    }
+
+    /*
+     * estaVacía Retorna verdadero si la lista está vacía o falso en caso contrario
+     */
+    public boolean estaVacia() {
+        return contador == 0;
+        //Retornar el resultado de una vez
+
+        /*if (contador == 0)
+        return true;
+        else
+        return false;
+         */
+    }
+    public boolean estaLlena(){
+        return contador >= a.length;
+    }
+
+    /*
+     * tamaño Retorna la cantidad de elementos guardados en la lista
+     */
+    public int tamano() {
+        return contador;
+  
+    }
+
+    /*
+     * aLaIzquierda Mueve a la izquierda todos los elementos a partir de la posición indicada
+     */
+    private void aLaIzquierda(int indice) {
+       for(int i = indice; i<contador; i++)
+           a[i] = a[i+1];
+    }
+
+    /*
+     * aLaDerecha Mueve a la derecha todos los elementos a partir de la posición indicada
+     */
+    private void aLaDerecha(int indice) {
+      for(int i = contador ; i>indice; i--)
+          a[i] = a[i-1];
+    }
+    
+    
+    /*
+    *
+    */
+    private void resize(int cap){
+        Item temp[] = (Item[]) new Object[cap];
+        for(int i=0; i<contador; i++)
+            temp[i] = a[i];
+        a=temp;
+        
+    }
+}
